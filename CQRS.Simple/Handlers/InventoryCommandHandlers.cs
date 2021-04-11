@@ -13,38 +13,38 @@ namespace CQRS.Simple.Handlers
             _repository = repository;
         }
 
-        public void Handle(CreateItemCommand message)
+        public void Handle(CreateItemCommand command)
         {
-            var item = new InventoryItemAggregate(message.InventoryItemId, message.Name);
+            var item = new InventoryItemAggregate(command.InventoryItemId, command.Name);
             _repository.Save(item, -1);
         }
 
-        public void Handle(DeactivateItemCommand message)
+        public void Handle(DeactivateItemCommand command)
         {
-            var item = _repository.GetById(message.InventoryItemId);
+            var item = _repository.GetById(command.InventoryItemId);
             item.Deactivate();
-            _repository.Save(item, message.OriginalVersion);
+            _repository.Save(item, command.OriginalVersion);
         }
 
-        public void Handle(RemoveItemsCommand message)
+        public void Handle(RemoveItemsCommand command)
         {
-            var item = _repository.GetById(message.InventoryItemId);
-            item.Remove(message.Count);
-            _repository.Save(item, message.OriginalVersion);
+            var item = _repository.GetById(command.InventoryItemId);
+            item.Remove(command.Count);
+            _repository.Save(item, command.OriginalVersion);
         }
 
-        public void Handle(CheckInItemsCommand message)
+        public void Handle(CheckInItemsCommand command)
         {
-            var item = _repository.GetById(message.InventoryItemId);
-            item.CheckIn(message.Count);
-            _repository.Save(item, message.OriginalVersion);
+            var item = _repository.GetById(command.InventoryItemId);
+            item.CheckIn(command.Count);
+            _repository.Save(item, command.OriginalVersion);
         }
 
-        public void Handle(RenameItemCommand message)
+        public void Handle(RenameItemCommand command)
         {
-            var item = _repository.GetById(message.InventoryItemId);
-            item.ChangeName(message.NewName);
-            _repository.Save(item, message.OriginalVersion);
+            var item = _repository.GetById(command.InventoryItemId);
+            item.ChangeName(command.NewName);
+            _repository.Save(item, command.OriginalVersion);
         }
     }
 }
