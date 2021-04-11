@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Add";
+}
+
+<form action="/Home/Add" method="post">
+    <div class="form-group">
+        <label for="Name" class="control-label col-sm-3">Name:</label>
+        <div class="col-sm-8">
+            <input class="form-control" type="text" data-val="true" id="Name" name="Name" value="" />
+        </div>
+    </div>
+
+    <div class="col-sm-offset-2 col-sm-8">
+        <input type="submit" value="Save" class="btn btn-primary mr-1" />
+    </div>
+</form>

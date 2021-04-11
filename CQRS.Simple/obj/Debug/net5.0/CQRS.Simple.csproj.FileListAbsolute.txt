@@ -1,0 +1,12 @@
+/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/bin/Debug/net5.0/CQRS.Simple.deps.json
+/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/bin/Debug/net5.0/CQRS.Simple.dll
+/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/bin/Debug/net5.0/ref/CQRS.Simple.dll
+/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/bin/Debug/net5.0/CQRS.Simple.pdb
+/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/obj/Debug/net5.0/CQRS.Simple.csprojAssemblyReference.cache
+/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/obj/Debug/net5.0/CQRS.Simple.GeneratedMSBuildEditorConfig.editorconfig
+/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/obj/Debug/net5.0/CQRS.Simple.AssemblyInfoInputs.cache
+/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/obj/Debug/net5.0/CQRS.Simple.AssemblyInfo.cs
+/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/obj/Debug/net5.0/CQRS.Simple.csproj.CoreCompileInputs.cache
+/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/obj/Debug/net5.0/CQRS.Simple.dll
+/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/obj/Debug/net5.0/ref/CQRS.Simple.dll
+/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/obj/Debug/net5.0/CQRS.Simple.pdb

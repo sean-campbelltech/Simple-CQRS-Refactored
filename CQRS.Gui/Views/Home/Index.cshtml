@@ -1,0 +1,20 @@
+﻿@model IEnumerable<CQRS.Simple.DTO.InventoryItemListDto>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div>
+    <h2>All items:</h2>
+    <ul>
+        @foreach (var inventoryItemListDto in Model)
+        {
+            <li>
+                @(Html.ActionLink("Name: " + inventoryItemListDto.Name,"Details",new{Id=inventoryItemListDto.Id}))
+            </li>
+        }
+    </ul>
+
+    <a class="nav-link text-dark" asp-area="" style="text-decoration:underline;" asp-controller="Home"
+        asp-action="Add">Add</a>
+</div>
