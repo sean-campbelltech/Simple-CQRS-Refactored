@@ -2,13 +2,13 @@ using System;
 
 namespace CQRS.Simple.Commands
 {
-    public class RenameInventoryItem : Command
+    public class RenameItemCommand : Command
     {
         public readonly Guid InventoryItemId;
         public readonly string NewName;
         public readonly int OriginalVersion;
 
-        public RenameInventoryItem(Guid inventoryItemId, string newName, int originalVersion)
+        public RenameItemCommand(Guid inventoryItemId, string newName, int originalVersion)
         {
             InventoryItemId = inventoryItemId;
             NewName = newName;

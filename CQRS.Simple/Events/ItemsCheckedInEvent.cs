@@ -2,12 +2,12 @@ using System;
 
 namespace CQRS.Simple.Events
 {
-    public class ItemsRemovedFromInventory : Event
+    public class ItemsCheckedInEvent : Event
     {
         public Guid Id;
         public readonly int Count;
 
-        public ItemsRemovedFromInventory(Guid id, int count)
+        public ItemsCheckedInEvent(Guid id, int count)
         {
             Id = id;
             Count = count;

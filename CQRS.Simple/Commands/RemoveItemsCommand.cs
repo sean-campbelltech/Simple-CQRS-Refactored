@@ -2,13 +2,13 @@ using System;
 
 namespace CQRS.Simple.Commands
 {
-    public class CheckInItemsToInventory : Command
+    public class RemoveItemsCommand : Command
     {
         public Guid InventoryItemId;
         public readonly int Count;
         public readonly int OriginalVersion;
 
-        public CheckInItemsToInventory(Guid inventoryItemId, int count, int originalVersion)
+        public RemoveItemsCommand(Guid inventoryItemId, int count, int originalVersion)
         {
             InventoryItemId = inventoryItemId;
             Count = count;

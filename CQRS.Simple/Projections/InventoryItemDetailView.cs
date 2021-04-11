@@ -6,14 +6,14 @@ using CQRS.Simple.Repositories;
 
 namespace CQRS.Simple.Projections
 {
-    public class InventoryItemDetailView : Handles<InventoryItemCreated>, Handles<InventoryItemDeactivated>, Handles<InventoryItemRenamed>, Handles<ItemsRemovedFromInventory>, Handles<ItemsCheckedInToInventory>
+    public class InventoryItemDetailView : Handles<ItemCreatedEvent>, Handles<ItemDeactivatedEvent>, Handles<ItemRenamedEvent>, Handles<ItemsRemovedEvent>, Handles<ItemsCheckedInEvent>
     {
-        public void Handle(InventoryItemCreated message)
+        public void Handle(ItemCreatedEvent message)
         {
             FakeDatabase.details.Add(message.Id, new InventoryItemDetailsDto(message.Id, message.Name, 0, 0));
         }
 
-        public void Handle(InventoryItemRenamed message)
+        public void Handle(ItemRenamedEvent message)
         {
             InventoryItemDetailsDto d = GetDetailsItem(message.Id);
             d.Name = message.NewName;
@@ -32,21 +32,21 @@ namespace CQRS.Simple.Projections
             return d;
         }
 
-        public void Handle(ItemsRemovedFromInventory message)
+        public void Handle(ItemsRemovedEvent message)
         {
             InventoryItemDetailsDto d = GetDetailsItem(message.Id);
             d.CurrentCount -= message.Count;
             d.Version = message.Version;
         }
 
-        public void Handle(ItemsCheckedInToInventory message)
+        public void Handle(ItemsCheckedInEvent message)
         {
             InventoryItemDetailsDto d = GetDetailsItem(message.Id);
             d.CurrentCount += message.Count;
             d.Version = message.Version;
         }
 
-        public void Handle(InventoryItemDeactivated message)
+        public void Handle(ItemDeactivatedEvent message)
         {
             FakeDatabase.details.Remove(message.Id);
         }

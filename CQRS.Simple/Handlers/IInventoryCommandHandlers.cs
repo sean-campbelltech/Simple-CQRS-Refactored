@@ -4,10 +4,10 @@ namespace CQRS.Simple.Handlers
 {
     public interface IInventoryCommandHandlers
     {
-        void Handle(CreateInventoryItem message);
-        void Handle(DeactivateInventoryItem message);
-        void Handle(RemoveItemsFromInventory message);
-        void Handle(CheckInItemsToInventory message);
-        void Handle(RenameInventoryItem message);
+        void Handle(CreateItemCommand message);
+        void Handle(DeactivateItemCommand message);
+        void Handle(RemoveItemsCommand message);
+        void Handle(CheckInItemsCommand message);
+        void Handle(RenameItemCommand message);
     }
 }

@@ -2,12 +2,12 @@ using System;
 
 namespace CQRS.Simple.Commands
 {
-    public class CreateInventoryItem : Command
+    public class CreateItemCommand : Command
     {
         public readonly Guid InventoryItemId;
         public readonly string Name;
 
-        public CreateInventoryItem(Guid inventoryItemId, string name)
+        public CreateItemCommand(Guid inventoryItemId, string name)
         {
             InventoryItemId = inventoryItemId;
             Name = name;

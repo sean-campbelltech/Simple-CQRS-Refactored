@@ -5,20 +5,20 @@ using CQRS.Simple.Repositories;
 
 namespace CQRS.Simple.Projections
 {
-    public class InventoryListView : Handles<InventoryItemCreated>, Handles<InventoryItemRenamed>, Handles<InventoryItemDeactivated>
+    public class InventoryListView : Handles<ItemCreatedEvent>, Handles<ItemRenamedEvent>, Handles<ItemDeactivatedEvent>
     {
-        public void Handle(InventoryItemCreated message)
+        public void Handle(ItemCreatedEvent message)
         {
             FakeDatabase.list.Add(new InventoryItemListDto(message.Id, message.Name));
         }
 
-        public void Handle(InventoryItemRenamed message)
+        public void Handle(ItemRenamedEvent message)
         {
             var item = FakeDatabase.list.Find(x => x.Id == message.Id);
             item.Name = message.NewName;
         }
 
-        public void Handle(InventoryItemDeactivated message)
+        public void Handle(ItemDeactivatedEvent message)
         {
             FakeDatabase.list.RemoveAll(x => x.Id == message.Id);
         }

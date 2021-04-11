@@ -2,11 +2,11 @@ using System;
 
 namespace CQRS.Simple.Events
 {
-    public class InventoryItemDeactivated : Event
+    public class ItemDeactivatedEvent : Event
     {
         public readonly Guid Id;
 
-        public InventoryItemDeactivated(Guid id)
+        public ItemDeactivatedEvent(Guid id)
         {
             Id = id;
         }
