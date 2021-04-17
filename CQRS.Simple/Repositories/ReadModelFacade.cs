@@ -9,12 +9,12 @@ namespace CQRS.Simple.Repositories
     {
         public IEnumerable<InventoryItemListDto> GetInventoryItems()
         {
-            return FakeDatabase.list;
+            return ReadDatabase.list;
         }
 
         public InventoryItemDetailsDto GetInventoryItemDetails(Guid id)
         {
-            return FakeDatabase.details[id];
+            return ReadDatabase.details[id];
         }
     }
 }

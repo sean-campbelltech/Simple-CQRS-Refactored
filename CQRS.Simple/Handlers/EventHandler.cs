@@ -10,15 +10,15 @@ namespace CQRS.Simple.Handlers
     {
         public void Handle(ItemCreatedEvent message)
         {
-            FakeDatabase.details.Add(message.Id, new InventoryItemDetailsDto(message.Id, message.Name, 0, 0));
-            FakeDatabase.list.Add(new InventoryItemListDto(message.Id, message.Name));
+            ReadDatabase.details.Add(message.Id, new InventoryItemDetailsDto(message.Id, message.Name, 0, 0));
+            ReadDatabase.list.Add(new InventoryItemListDto(message.Id, message.Name));
         }
 
         private InventoryItemDetailsDto GetDetailsItem(Guid id)
         {
             InventoryItemDetailsDto d;
 
-            if (!FakeDatabase.details.TryGetValue(id, out d))
+            if (!ReadDatabase.details.TryGetValue(id, out d))
             {
                 throw new InvalidOperationException("did not find the original inventory this shouldnt happen");
             }
@@ -32,7 +32,7 @@ namespace CQRS.Simple.Handlers
             d.Name = message.NewName;
             d.Version = message.Version;
 
-            var item = FakeDatabase.list.Find(x => x.Id == message.Id);
+            var item = ReadDatabase.list.Find(x => x.Id == message.Id);
             item.Name = message.NewName;
         }
 
@@ -52,8 +52,8 @@ namespace CQRS.Simple.Handlers
 
         public void Handle(ItemDeactivatedEvent message)
         {
-            FakeDatabase.details.Remove(message.Id);
-            FakeDatabase.list.RemoveAll(x => x.Id == message.Id);
+            ReadDatabase.details.Remove(message.Id);
+            ReadDatabase.list.RemoveAll(x => x.Id == message.Id);
         }
     }
 }

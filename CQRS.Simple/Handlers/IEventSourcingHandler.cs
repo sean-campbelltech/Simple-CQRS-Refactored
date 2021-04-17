@@ -1,9 +1,9 @@
 using System;
 using CQRS.Simple.Aggregates;
 
-namespace CQRS.Simple.Repositories
+namespace CQRS.Simple.Handlers
 {
-    public interface IRepository<T> where T : AggregateRoot, new()
+    public interface IEventSourcingHandler<T> where T : AggregateRoot, new()
     {
         void Save(AggregateRoot aggregate, int expectedVersion);
         T GetById(Guid id);

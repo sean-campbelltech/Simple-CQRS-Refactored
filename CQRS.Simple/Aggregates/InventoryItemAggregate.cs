@@ -7,6 +7,7 @@ namespace CQRS.Simple.Aggregates
     {
         private bool _activated;
         private Guid _id;
+        private string _name;
 
         public InventoryItemAggregate()
         {
@@ -27,6 +28,7 @@ namespace CQRS.Simple.Aggregates
         {
             _id = e.Id;
             _activated = true;
+            _name = e.Name;
         }
 
         private void Apply(ItemDeactivatedEvent e)

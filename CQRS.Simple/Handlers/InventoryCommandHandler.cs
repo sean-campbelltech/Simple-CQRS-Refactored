@@ -6,45 +6,45 @@ namespace CQRS.Simple.Handlers
 {
     public class InventoryCommandHandler : ICommandHandler
     {
-        private readonly IRepository<InventoryItemAggregate> _repository;
+        private readonly IEventSourcingHandler<InventoryItemAggregate> _eventSourcingHandler;
 
-        public InventoryCommandHandler(IRepository<InventoryItemAggregate> repository)
+        public InventoryCommandHandler(IEventSourcingHandler<InventoryItemAggregate> eventSourcingHandler)
         {
-            _repository = repository;
+            _eventSourcingHandler = eventSourcingHandler;
         }
 
         public void Handle(CreateItemCommand command)
         {
             var item = new InventoryItemAggregate(command.InventoryItemId, command.Name);
-            _repository.Save(item, -1);
+            _eventSourcingHandler.Save(item, -1);
         }
 
         public void Handle(DeactivateItemCommand command)
         {
-            var item = _repository.GetById(command.InventoryItemId);
+            var item = _eventSourcingHandler.GetById(command.InventoryItemId);
             item.Deactivate();
-            _repository.Save(item, command.OriginalVersion);
+            _eventSourcingHandler.Save(item, command.OriginalVersion);
         }
 
         public void Handle(RemoveItemsCommand command)
         {
-            var item = _repository.GetById(command.InventoryItemId);
+            var item = _eventSourcingHandler.GetById(command.InventoryItemId);
             item.Remove(command.Count);
-            _repository.Save(item, command.OriginalVersion);
+            _eventSourcingHandler.Save(item, command.OriginalVersion);
         }
 
         public void Handle(CheckInItemsCommand command)
         {
-            var item = _repository.GetById(command.InventoryItemId);
+            var item = _eventSourcingHandler.GetById(command.InventoryItemId);
             item.CheckIn(command.Count);
-            _repository.Save(item, command.OriginalVersion);
+            _eventSourcingHandler.Save(item, command.OriginalVersion);
         }
 
         public void Handle(RenameItemCommand command)
         {
-            var item = _repository.GetById(command.InventoryItemId);
+            var item = _eventSourcingHandler.GetById(command.InventoryItemId);
             item.ChangeName(command.NewName);
-            _repository.Save(item, command.OriginalVersion);
+            _eventSourcingHandler.Save(item, command.OriginalVersion);
         }
     }
 }
