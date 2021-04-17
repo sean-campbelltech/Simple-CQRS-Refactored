@@ -8,7 +8,7 @@ using CQRS.Simple.Publishers;
 
 namespace CQRS.Simple.Bus
 {
-    public class FakeBus : ICommandSender, IEventPublisher
+    public class MessageRouter : ICommandDispatcher, IEventPublisher
     {
         private readonly Dictionary<Type, List<Action<Message>>> _routes = new Dictionary<Type, List<Action<Message>>>();
 

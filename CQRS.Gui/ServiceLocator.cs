@@ -4,6 +4,6 @@ namespace CQRS.Gui
 {
     public static class ServiceLocator
     {
-        public static FakeBus Bus { get; set; }
+        public static MessageRouter Bus { get; set; }
     }
 }

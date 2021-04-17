@@ -32,11 +32,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Gui/CQRS.Gui.csproj",
+      "projectUniqueName": "/home/sean/Source/Simple-CQRS-Refactored/CQRS.Gui/CQRS.Gui.csproj",
       "projectName": "CQRS.Gui",
-      "projectPath": "/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Gui/CQRS.Gui.csproj",
+      "projectPath": "/home/sean/Source/Simple-CQRS-Refactored/CQRS.Gui/CQRS.Gui.csproj",
       "packagesPath": "/home/sean/.nuget/packages/",
-      "outputPath": "/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Gui/obj/",
+      "outputPath": "/home/sean/Source/Simple-CQRS-Refactored/CQRS.Gui/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/sean/.nuget/NuGet/NuGet.Config"
@@ -51,8 +51,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/CQRS.Simple.csproj": {
-              "projectPath": "/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Simple/CQRS.Simple.csproj"
+            "/home/sean/Source/Simple-CQRS-Refactored/CQRS.Simple/CQRS.Simple.csproj": {
+              "projectPath": "/home/sean/Source/Simple-CQRS-Refactored/CQRS.Simple/CQRS.Simple.csproj"
             }
           }
         }
@@ -84,7 +84,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.201/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.202/RuntimeIdentifierGraph.json"
       }
     }
   }

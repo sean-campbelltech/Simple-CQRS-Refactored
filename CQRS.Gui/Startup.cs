@@ -1,18 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CQRS.Simple.Aggregates;
 using CQRS.Simple.Bus;
 using CQRS.Simple.Commands;
 using CQRS.Simple.Events;
 using CQRS.Simple.Handlers;
 using CQRS.Simple.Projections;
-using CQRS.Simple.Publishers;
 using CQRS.Simple.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,29 +25,29 @@ namespace CQRS.Gui
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var bus = new FakeBus();
-            var storage = new EventStore(bus);
+            var messageRouter = new MessageRouter();
+            var storage = new EventStore(messageRouter);
             var rep = new Repository<InventoryItemAggregate>(storage);
 
             var commands = new InventoryCommandHandlers(rep);
-            bus.RegisterHandler<CheckInItemsCommand>(commands.Handle);
-            bus.RegisterHandler<CreateItemCommand>(commands.Handle);
-            bus.RegisterHandler<DeactivateItemCommand>(commands.Handle);
-            bus.RegisterHandler<RemoveItemsCommand>(commands.Handle);
-            bus.RegisterHandler<RenameItemCommand>(commands.Handle);
+            messageRouter.RegisterHandler<CheckInItemsCommand>(commands.Handle);
+            messageRouter.RegisterHandler<CreateItemCommand>(commands.Handle);
+            messageRouter.RegisterHandler<DeactivateItemCommand>(commands.Handle);
+            messageRouter.RegisterHandler<RemoveItemsCommand>(commands.Handle);
+            messageRouter.RegisterHandler<RenameItemCommand>(commands.Handle);
 
             var detail = new InventoryItemDetailView();
-            bus.RegisterHandler<ItemCreatedEvent>(detail.Handle);
-            bus.RegisterHandler<ItemDeactivatedEvent>(detail.Handle);
-            bus.RegisterHandler<ItemRenamedEvent>(detail.Handle);
-            bus.RegisterHandler<ItemsCheckedInEvent>(detail.Handle);
-            bus.RegisterHandler<ItemsRemovedEvent>(detail.Handle);
+            messageRouter.RegisterHandler<ItemCreatedEvent>(detail.Handle);
+            messageRouter.RegisterHandler<ItemDeactivatedEvent>(detail.Handle);
+            messageRouter.RegisterHandler<ItemRenamedEvent>(detail.Handle);
+            messageRouter.RegisterHandler<ItemsCheckedInEvent>(detail.Handle);
+            messageRouter.RegisterHandler<ItemsRemovedEvent>(detail.Handle);
 
             var list = new InventoryListView();
-            bus.RegisterHandler<ItemCreatedEvent>(list.Handle);
-            bus.RegisterHandler<ItemRenamedEvent>(list.Handle);
-            bus.RegisterHandler<ItemDeactivatedEvent>(list.Handle);
-            ServiceLocator.Bus = bus;
+            messageRouter.RegisterHandler<ItemCreatedEvent>(list.Handle);
+            messageRouter.RegisterHandler<ItemRenamedEvent>(list.Handle);
+            messageRouter.RegisterHandler<ItemDeactivatedEvent>(list.Handle);
+            ServiceLocator.Bus = messageRouter;
 
             services.AddSingleton<IReadModelFacade, ReadModelFacade>();
             services.AddControllersWithViews();

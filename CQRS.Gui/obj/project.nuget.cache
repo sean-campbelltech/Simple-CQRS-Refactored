@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gqTdMBbJfXH3ckBNJN5yBF6un4Uv8inO+FsolkEdX73pE51NcS6QQVYt16Os8X2EmUImw7dLfL+BnuF58p8Rfw==",
+  "dgSpecHash": "BHSsllN+6Wt5ruHOmobQUaSZAaZ4x8meKtsvLlLNoEuN1J3Vz4dRdwigyErREMIP/b7t8lxhmwJ04hVslc4jEA==",
   "success": true,
-  "projectFilePath": "/home/sean/Source/Simple-CQRS-NET-Core/CQRS.Gui/CQRS.Gui.csproj",
+  "projectFilePath": "/home/sean/Source/Simple-CQRS-Refactored/CQRS.Gui/CQRS.Gui.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

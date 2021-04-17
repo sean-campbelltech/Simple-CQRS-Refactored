@@ -11,7 +11,7 @@ namespace CQRS.Gui.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly FakeBus _bus;
+        private readonly MessageRouter _bus;
         private readonly IReadModelFacade _readmodel;
         private readonly ILogger<HomeController> _logger;
 
