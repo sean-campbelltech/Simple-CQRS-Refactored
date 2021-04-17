@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CQRS.Gui.Models;
-using CQRS.Simple.Bus;
 using CQRS.Simple.Repositories;
 using System;
 using CQRS.Simple.Commands;

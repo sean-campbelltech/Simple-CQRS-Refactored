@@ -1,4 +1,4 @@
-using CQRS.Simple.Bus;
+using CQRS.Simple.Routers;
 
 namespace CQRS.Gui
 {

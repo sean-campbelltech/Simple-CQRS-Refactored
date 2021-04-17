@@ -6,7 +6,7 @@ using CQRS.Simple.Events;
 using CQRS.Simple.Messages;
 using CQRS.Simple.Publishers;
 
-namespace CQRS.Simple.Bus
+namespace CQRS.Simple.Routers
 {
     public class MessageRouter : ICommandDispatcher, IEventPublisher
     {

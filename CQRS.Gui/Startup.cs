@@ -1,11 +1,11 @@
 using CQRS.Simple.Aggregates;
-using CQRS.Simple.Bus;
 using CQRS.Simple.Commands;
 using CQRS.Simple.Events;
 using CQRS.Simple.Handlers;
 using CQRS.Simple.Projections;
 using CQRS.Simple.Publishers;
 using CQRS.Simple.Repositories;
+using CQRS.Simple.Routers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
