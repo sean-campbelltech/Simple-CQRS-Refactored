@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CQRS.Simple.Events;
+using CQRS.Simple.Exceptions;
 using CQRS.Simple.Publishers;
 
 namespace CQRS.Simple.Repositories
@@ -12,7 +13,6 @@ namespace CQRS.Simple.Repositories
 
         private struct EventDescriptor
         {
-
             public readonly Event EventData;
             public readonly Guid Id;
             public readonly int Version;
@@ -78,13 +78,5 @@ namespace CQRS.Simple.Repositories
 
             return eventDescriptors.Select(desc => desc.EventData).ToList();
         }
-    }
-
-    public class AggregateNotFoundException : Exception
-    {
-    }
-
-    public class ConcurrencyException : Exception
-    {
     }
 }
