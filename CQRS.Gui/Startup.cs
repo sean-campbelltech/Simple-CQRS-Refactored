@@ -4,6 +4,7 @@ using CQRS.Simple.Commands;
 using CQRS.Simple.Events;
 using CQRS.Simple.Handlers;
 using CQRS.Simple.Projections;
+using CQRS.Simple.Publishers;
 using CQRS.Simple.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -47,8 +48,10 @@ namespace CQRS.Gui
             messageRouter.RegisterHandler<ItemCreatedEvent>(list.Handle);
             messageRouter.RegisterHandler<ItemRenamedEvent>(list.Handle);
             messageRouter.RegisterHandler<ItemDeactivatedEvent>(list.Handle);
-            ServiceLocator.Bus = messageRouter;
+            ServiceLocator.MessageRouter = messageRouter;
 
+            services.AddSingleton<ICommandDispatcher>(x => messageRouter);
+            services.AddSingleton<IEventPublisher>(x => messageRouter);
             services.AddSingleton<IReadModelFacade, ReadModelFacade>();
             services.AddControllersWithViews();
         }

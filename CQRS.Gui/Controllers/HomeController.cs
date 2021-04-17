@@ -11,15 +11,18 @@ namespace CQRS.Gui.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly MessageRouter _bus;
-        private readonly IReadModelFacade _readmodel;
+        private readonly ICommandDispatcher _commandDispatcher;
         private readonly ILogger<HomeController> _logger;
+        private readonly IReadModelFacade _readmodel;
 
-        public HomeController(ILogger<HomeController> logger, IReadModelFacade readmodel)
+        public HomeController(
+            ICommandDispatcher commandDispatcher,
+            ILogger<HomeController> logger,
+            IReadModelFacade readmodel)
         {
-            _logger = logger;
+            _commandDispatcher = commandDispatcher;
             _readmodel = readmodel;
-            _bus = ServiceLocator.Bus;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -41,7 +44,7 @@ namespace CQRS.Gui.Controllers
         [HttpPost]
         public ActionResult Add(string name)
         {
-            _bus.Send(new CreateItemCommand(Guid.NewGuid(), name));
+            _commandDispatcher.Send(new CreateItemCommand(Guid.NewGuid(), name));
 
             return RedirectToAction("Index");
         }
@@ -56,7 +59,7 @@ namespace CQRS.Gui.Controllers
         public ActionResult ChangeName(Guid id, string name, int version)
         {
             var command = new RenameItemCommand(id, name, version);
-            _bus.Send(command);
+            _commandDispatcher.Send(command);
 
             return RedirectToAction("Index");
         }
@@ -70,7 +73,7 @@ namespace CQRS.Gui.Controllers
         [HttpPost]
         public ActionResult Deactivate(Guid id, int version)
         {
-            _bus.Send(new DeactivateItemCommand(id, version));
+            _commandDispatcher.Send(new DeactivateItemCommand(id, version));
             return RedirectToAction("Index");
         }
 
@@ -83,7 +86,7 @@ namespace CQRS.Gui.Controllers
         [HttpPost]
         public ActionResult CheckIn(Guid id, int number, int version)
         {
-            _bus.Send(new CheckInItemsCommand(id, number, version));
+            _commandDispatcher.Send(new CheckInItemsCommand(id, number, version));
             return RedirectToAction("Index");
         }
 
@@ -96,7 +99,7 @@ namespace CQRS.Gui.Controllers
         [HttpPost]
         public ActionResult Remove(Guid id, int number, int version)
         {
-            _bus.Send(new RemoveItemsCommand(id, number, version));
+            _commandDispatcher.Send(new RemoveItemsCommand(id, number, version));
             return RedirectToAction("Index");
         }
 
