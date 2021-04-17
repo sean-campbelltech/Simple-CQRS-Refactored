@@ -8,7 +8,7 @@ using CQRS.Simple.Publishers;
 
 namespace CQRS.Simple.Routers
 {
-    public class MessageRouter : ICommandDispatcher, IEventPublisher
+    public class MessageRouter : IRouter, ICommandDispatcher, IEventPublisher
     {
         private readonly Dictionary<Type, List<Action<Message>>> _routes = new Dictionary<Type, List<Action<Message>>>();
 
