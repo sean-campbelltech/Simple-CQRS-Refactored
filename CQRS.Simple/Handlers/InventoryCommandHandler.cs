@@ -4,7 +4,7 @@ using CQRS.Simple.Repositories;
 
 namespace CQRS.Simple.Handlers
 {
-    public class InventoryCommandHandler : IInventoryCommandHandler
+    public class InventoryCommandHandler : ICommandHandler
     {
         private readonly IRepository<InventoryItemAggregate> _repository;
 

@@ -1,23 +1,17 @@
 using System;
 using CQRS.Simple.DTO;
 using CQRS.Simple.Events;
-using CQRS.Simple.Handlers;
 using CQRS.Simple.Repositories;
 
-namespace CQRS.Simple.Projections
+namespace CQRS.Simple.Handlers
 {
-    public class InventoryItemDetailView : IHandler<ItemCreatedEvent>, IHandler<ItemDeactivatedEvent>, IHandler<ItemRenamedEvent>, IHandler<ItemsRemovedEvent>, IHandler<ItemsCheckedInEvent>
+    // EventHandler that populates the Read database
+    public class EventHandler : IEventHandler
     {
         public void Handle(ItemCreatedEvent message)
         {
             FakeDatabase.details.Add(message.Id, new InventoryItemDetailsDto(message.Id, message.Name, 0, 0));
-        }
-
-        public void Handle(ItemRenamedEvent message)
-        {
-            InventoryItemDetailsDto d = GetDetailsItem(message.Id);
-            d.Name = message.NewName;
-            d.Version = message.Version;
+            FakeDatabase.list.Add(new InventoryItemListDto(message.Id, message.Name));
         }
 
         private InventoryItemDetailsDto GetDetailsItem(Guid id)
@@ -30,6 +24,16 @@ namespace CQRS.Simple.Projections
             }
 
             return d;
+        }
+
+        public void Handle(ItemRenamedEvent message)
+        {
+            InventoryItemDetailsDto d = GetDetailsItem(message.Id);
+            d.Name = message.NewName;
+            d.Version = message.Version;
+
+            var item = FakeDatabase.list.Find(x => x.Id == message.Id);
+            item.Name = message.NewName;
         }
 
         public void Handle(ItemsRemovedEvent message)
@@ -49,6 +53,7 @@ namespace CQRS.Simple.Projections
         public void Handle(ItemDeactivatedEvent message)
         {
             FakeDatabase.details.Remove(message.Id);
+            FakeDatabase.list.RemoveAll(x => x.Id == message.Id);
         }
     }
 }

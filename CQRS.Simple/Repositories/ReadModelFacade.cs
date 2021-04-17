@@ -4,6 +4,7 @@ using CQRS.Simple.DTO;
 
 namespace CQRS.Simple.Repositories
 {
+    // Queries the read database
     public class ReadModelFacade : IReadModelFacade
     {
         public IEnumerable<InventoryItemListDto> GetInventoryItems()
