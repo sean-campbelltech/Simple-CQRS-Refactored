@@ -30,7 +30,7 @@ namespace CQRS.Gui
             var storage = new EventStore(messageRouter);
             var rep = new Repository<InventoryItemAggregate>(storage);
 
-            var commands = new InventoryCommandHandlers(rep);
+            var commands = new InventoryCommandHandler(rep);
             messageRouter.RegisterHandler<CheckInItemsCommand>(commands.Handle);
             messageRouter.RegisterHandler<CreateItemCommand>(commands.Handle);
             messageRouter.RegisterHandler<DeactivateItemCommand>(commands.Handle);
@@ -52,6 +52,10 @@ namespace CQRS.Gui
 
             services.AddSingleton<ICommandDispatcher>(x => messageRouter);
             services.AddSingleton<IEventPublisher>(x => messageRouter);
+            services.AddSingleton<IEventStore, EventStore>();
+            services.AddSingleton<IRepository<InventoryItemAggregate>, Repository<InventoryItemAggregate>>();
+
+            services.AddSingleton<IInventoryCommandHandler, InventoryCommandHandler>();
             services.AddSingleton<IReadModelFacade, ReadModelFacade>();
             services.AddControllersWithViews();
         }

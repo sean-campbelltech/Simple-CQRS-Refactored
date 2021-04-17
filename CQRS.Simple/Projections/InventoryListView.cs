@@ -5,7 +5,7 @@ using CQRS.Simple.Repositories;
 
 namespace CQRS.Simple.Projections
 {
-    public class InventoryListView : Handles<ItemCreatedEvent>, Handles<ItemRenamedEvent>, Handles<ItemDeactivatedEvent>
+    public class InventoryListView : IHandler<ItemCreatedEvent>, IHandler<ItemRenamedEvent>, IHandler<ItemDeactivatedEvent>
     {
         public void Handle(ItemCreatedEvent message)
         {

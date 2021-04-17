@@ -2,7 +2,7 @@ using CQRS.Simple.Commands;
 
 namespace CQRS.Simple.Handlers
 {
-    public interface IInventoryCommandHandlers
+    public interface IInventoryCommandHandler
     {
         void Handle(CreateItemCommand message);
         void Handle(DeactivateItemCommand message);

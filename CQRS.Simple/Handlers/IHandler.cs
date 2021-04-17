@@ -1,6 +1,6 @@
 namespace CQRS.Simple.Handlers
 {
-    public interface Handles<T>
+    public interface IHandler<T>
     {
         void Handle(T message);
     }
