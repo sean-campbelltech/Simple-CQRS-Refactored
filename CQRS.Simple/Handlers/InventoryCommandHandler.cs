@@ -15,36 +15,41 @@ namespace CQRS.Simple.Handlers
 
         public void Handle(CreateItemCommand command)
         {
-            var item = new InventoryItemAggregate(command.InventoryItemId, command.Name);
-            _eventSourcingHandler.Save(item, -1);
+            var aggregate = new InventoryItemAggregate(command.InventoryItemId, command.Name);
+
+            _eventSourcingHandler.Save(aggregate, -1);
         }
 
         public void Handle(DeactivateItemCommand command)
         {
-            var item = _eventSourcingHandler.GetById(command.InventoryItemId);
-            item.Deactivate();
-            _eventSourcingHandler.Save(item, command.OriginalVersion);
+            var aggregate = _eventSourcingHandler.GetById(command.InventoryItemId);
+            aggregate.Deactivate();
+
+            _eventSourcingHandler.Save(aggregate, command.OriginalVersion);
         }
 
         public void Handle(RemoveItemsCommand command)
         {
-            var item = _eventSourcingHandler.GetById(command.InventoryItemId);
-            item.Remove(command.Count);
-            _eventSourcingHandler.Save(item, command.OriginalVersion);
+            var aggregate = _eventSourcingHandler.GetById(command.InventoryItemId);
+            aggregate.Remove(command.Count);
+
+            _eventSourcingHandler.Save(aggregate, command.OriginalVersion);
         }
 
         public void Handle(CheckInItemsCommand command)
         {
-            var item = _eventSourcingHandler.GetById(command.InventoryItemId);
-            item.CheckIn(command.Count);
-            _eventSourcingHandler.Save(item, command.OriginalVersion);
+            var aggregate = _eventSourcingHandler.GetById(command.InventoryItemId);
+            aggregate.CheckIn(command.Count);
+
+            _eventSourcingHandler.Save(aggregate, command.OriginalVersion);
         }
 
         public void Handle(RenameItemCommand command)
         {
-            var item = _eventSourcingHandler.GetById(command.InventoryItemId);
-            item.ChangeName(command.NewName);
-            _eventSourcingHandler.Save(item, command.OriginalVersion);
+            var aggregate = _eventSourcingHandler.GetById(command.InventoryItemId);
+            aggregate.ChangeName(command.NewName);
+
+            _eventSourcingHandler.Save(aggregate, command.OriginalVersion);
         }
     }
 }
