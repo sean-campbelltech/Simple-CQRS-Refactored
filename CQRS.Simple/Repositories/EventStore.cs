@@ -3,52 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using CQRS.Simple.Events;
 using CQRS.Simple.Exceptions;
+using CQRS.Simple.Models;
 using CQRS.Simple.Publishers;
 
 namespace CQRS.Simple.Repositories
 {
     public class EventStore : IEventStore
     {
+        private readonly IEventStoreRepository _eventStoreRepository;
         private readonly IEventPublisher _publisher;
 
-        private struct EventDescriptor
+        public EventStore(IEventStoreRepository eventStoreRepository, IEventPublisher publisher)
         {
-            public readonly Event EventData;
-            public readonly Guid Id;
-            public readonly int Version;
-
-            public EventDescriptor(Guid id, Event eventData, int version)
-            {
-                EventData = eventData;
-                Version = version;
-                Id = id;
-            }
-        }
-
-        public EventStore(IEventPublisher publisher)
-        {
+            _eventStoreRepository = eventStoreRepository;
             _publisher = publisher;
         }
 
-        private readonly Dictionary<Guid, List<EventDescriptor>> _current = new Dictionary<Guid, List<EventDescriptor>>();
-
         public void SaveEvents(Guid aggregateId, IEnumerable<Event> events, int expectedVersion)
         {
-            List<EventDescriptor> eventDescriptors;
+            var eventDescriptors = _eventStoreRepository.FindAllById(aggregateId);
 
-            // try to get event descriptors list for given aggregate id
-            // otherwise -> create empty dictionary
-            if (!_current.TryGetValue(aggregateId, out eventDescriptors))
-            {
-                eventDescriptors = new List<EventDescriptor>();
-                _current.Add(aggregateId, eventDescriptors);
-            }
             // check whether latest event version matches current aggregate version
             // otherwise -> throw exception
-            else if (eventDescriptors[eventDescriptors.Count - 1].Version != expectedVersion && expectedVersion != -1)
+            if (expectedVersion != -1 && eventDescriptors[eventDescriptors.Count - 1].Version != expectedVersion)
             {
                 throw new ConcurrencyException();
             }
+
             var i = expectedVersion;
 
             // iterate through current aggregate events increasing version with each processed event
@@ -57,8 +38,8 @@ namespace CQRS.Simple.Repositories
                 i++;
                 @event.Version = i;
 
-                // push event to the event descriptors list for current aggregate
-                eventDescriptors.Add(new EventDescriptor(aggregateId, @event, i));
+                // persist event to the event store for current aggregate
+                _eventStoreRepository.Save(aggregateId, new EventModel(aggregateId, @event, i));
 
                 // publish current event to the bus for further processing by subscribers
                 _publisher.Publish(@event);
@@ -69,14 +50,14 @@ namespace CQRS.Simple.Repositories
         // used to build up an aggregate from its history (Domain.LoadsFromHistory)
         public List<Event> Replay(Guid aggregateId)
         {
-            List<EventDescriptor> eventDescriptors;
+            var eventDescriptors = _eventStoreRepository.FindAllById(aggregateId);
 
-            if (!_current.TryGetValue(aggregateId, out eventDescriptors))
-            {
+            if (eventDescriptors == null)
                 throw new AggregateNotFoundException();
-            }
 
             return eventDescriptors.Select(desc => desc.EventData).ToList();
         }
+
     }
+
 }

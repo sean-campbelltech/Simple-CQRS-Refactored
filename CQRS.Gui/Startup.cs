@@ -29,6 +29,7 @@ namespace CQRS.Gui
             services.AddSingleton<IRouter>(x => messageRouter);
             services.AddSingleton<ICommandDispatcher>(x => messageRouter);
             services.AddSingleton<IEventPublisher>(x => messageRouter);
+            services.AddSingleton<IEventStoreRepository, EventStoreRepository>();
             services.AddSingleton<IEventStore, EventStore>();
             services.AddSingleton<IEventSourcingHandler<InventoryItemAggregate>, EventSourcingHandler<InventoryItemAggregate>>();
             services.AddSingleton<ICommandHandler, InventoryCommandHandler>();
