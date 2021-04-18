@@ -16,6 +16,7 @@ namespace CQRS.Simple.Handlers
         public void Save(AggregateRoot aggregate, int expectedVersion)
         {
             _eventStore.SaveEvents(aggregate.Id, aggregate.GetUncommittedChanges(), expectedVersion);
+            aggregate.MarkChangesAsCommitted();
         }
 
         public T GetById(Guid id)
