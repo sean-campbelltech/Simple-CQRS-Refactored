@@ -20,11 +20,11 @@ namespace CQRS.Simple.Handlers
 
         public T GetById(Guid id)
         {
-            var obj = new T();//lots of ways to do this
-            var e = _eventStore.Replay(id);
-            obj.LoadsFromHistory(e);
+            var aggregate = new T();
+            var events = _eventStore.GetEvents(id);
+            aggregate.ReplayEvents(events);
 
-            return obj;
+            return aggregate;
         }
     }
 }

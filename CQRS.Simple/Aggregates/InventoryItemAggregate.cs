@@ -5,9 +5,9 @@ namespace CQRS.Simple.Aggregates
 {
     public class InventoryItemAggregate : AggregateRoot
     {
-        private bool _activated;
         private Guid _id;
-        private string _name;
+        private bool _activated;
+        private int _stockCount;
 
         public InventoryItemAggregate()
         {
@@ -16,7 +16,7 @@ namespace CQRS.Simple.Aggregates
 
         public InventoryItemAggregate(Guid id, string name)
         {
-            ApplyChange(new ItemCreatedEvent(id, name));
+            RaiseEvent(new ItemCreatedEvent(id, name));
         }
 
         public override Guid Id
@@ -24,11 +24,41 @@ namespace CQRS.Simple.Aggregates
             get { return _id; }
         }
 
+        public void ChangeName(string newName)
+        {
+            if (string.IsNullOrEmpty(newName)) throw new ArgumentException("newName");
+
+            RaiseEvent(new ItemRenamedEvent(_id, newName));
+        }
+
+        public void CheckIn(int count)
+        {
+            if (count <= 0) throw new InvalidOperationException("must have a count greater than 0 to add to inventory");
+
+            RaiseEvent(new ItemsCheckedInEvent(_id, count));
+        }
+
+        public void Remove(int count)
+        {
+            if (count <= 0) throw new InvalidOperationException("cant remove negative count from inventory");
+
+            if (count > _stockCount) throw new InvalidOperationException($"{count} is greater that the stock level of {_stockCount}!");
+
+            RaiseEvent(new ItemsRemovedEvent(_id, count));
+        }
+
+
+        public void Deactivate()
+        {
+            if (!_activated) throw new InvalidOperationException("already deactivated");
+
+            RaiseEvent(new ItemDeactivatedEvent(_id));
+        }
+
         private void Apply(ItemCreatedEvent e)
         {
             _id = e.Id;
             _activated = true;
-            _name = e.Name;
         }
 
         private void Apply(ItemDeactivatedEvent e)
@@ -36,29 +66,14 @@ namespace CQRS.Simple.Aggregates
             _activated = false;
         }
 
-        public void ChangeName(string newName)
+        private void Apply(ItemsCheckedInEvent e)
         {
-            if (string.IsNullOrEmpty(newName)) throw new ArgumentException("newName");
-            ApplyChange(new ItemRenamedEvent(_id, newName));
+            _stockCount += e.Count;
         }
 
-        public void Remove(int count)
+        private void Apply(ItemsRemovedEvent e)
         {
-            if (count <= 0) throw new InvalidOperationException("cant remove negative count from inventory");
-            ApplyChange(new ItemsRemovedEvent(_id, count));
-        }
-
-
-        public void CheckIn(int count)
-        {
-            if (count <= 0) throw new InvalidOperationException("must have a count greater than 0 to add to inventory");
-            ApplyChange(new ItemsCheckedInEvent(_id, count));
-        }
-
-        public void Deactivate()
-        {
-            if (!_activated) throw new InvalidOperationException("already deactivated");
-            ApplyChange(new ItemDeactivatedEvent(_id));
+            _stockCount -= e.Count;
         }
     }
 }

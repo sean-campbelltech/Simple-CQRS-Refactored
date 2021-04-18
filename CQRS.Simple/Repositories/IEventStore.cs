@@ -7,6 +7,6 @@ namespace CQRS.Simple.Repositories
     public interface IEventStore
     {
         void SaveEvents(Guid aggregateId, IEnumerable<Event> events, int expectedVersion);
-        List<Event> Replay(Guid aggregateId);
+        List<Event> GetEvents(Guid aggregateId);
     }
 }

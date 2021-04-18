@@ -22,12 +22,12 @@ namespace CQRS.Simple.Aggregates
             _changes.Clear();
         }
 
-        public void LoadsFromHistory(IEnumerable<Event> history)
+        public void ReplayEvents(IEnumerable<Event> events)
         {
-            foreach (var e in history) ApplyChange(e, false);
+            foreach (var @event in events) ApplyChange(@event, false);
         }
 
-        protected void ApplyChange(Event @event)
+        protected void RaiseEvent(Event @event)
         {
             ApplyChange(@event, true);
         }

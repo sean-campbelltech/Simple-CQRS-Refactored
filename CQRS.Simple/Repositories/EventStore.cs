@@ -48,7 +48,7 @@ namespace CQRS.Simple.Repositories
 
         // collect all processed events for given aggregate and return them as a list
         // used to build up an aggregate from its history (Domain.LoadsFromHistory)
-        public List<Event> Replay(Guid aggregateId)
+        public List<Event> GetEvents(Guid aggregateId)
         {
             var eventDescriptors = _eventStoreRepository.FindAllById(aggregateId);
 
