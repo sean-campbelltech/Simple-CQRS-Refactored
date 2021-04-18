@@ -21,11 +21,11 @@ namespace CQRS.Simple.Repositories
 
         public void SaveEvents(Guid aggregateId, IEnumerable<Event> events, int expectedVersion)
         {
-            var eventDescriptors = _eventStoreRepository.FindAllById(aggregateId);
+            var eventStream = _eventStoreRepository.FindAllById(aggregateId);
 
             // check whether latest event version matches current aggregate version
             // otherwise -> throw exception
-            if (expectedVersion != -1 && eventDescriptors[eventDescriptors.Count - 1].Version != expectedVersion)
+            if (expectedVersion != -1 && eventStream[eventStream.Count - 1].Version != expectedVersion)
             {
                 throw new ConcurrencyException();
             }
@@ -50,12 +50,12 @@ namespace CQRS.Simple.Repositories
         // used to build up an aggregate from its history (Domain.LoadsFromHistory)
         public List<Event> GetEvents(Guid aggregateId)
         {
-            var eventDescriptors = _eventStoreRepository.FindAllById(aggregateId);
+            var eventStream = _eventStoreRepository.FindAllById(aggregateId);
 
-            if (eventDescriptors == null)
+            if (eventStream == null)
                 throw new AggregateNotFoundException();
 
-            return eventDescriptors.Select(desc => desc.EventData).ToList();
+            return eventStream.Select(desc => desc.EventData).ToList();
         }
 
     }
