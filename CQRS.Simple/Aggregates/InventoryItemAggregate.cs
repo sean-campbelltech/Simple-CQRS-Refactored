@@ -5,7 +5,6 @@ namespace CQRS.Simple.Aggregates
 {
     public class InventoryItemAggregate : AggregateRoot
     {
-        private Guid _id;
         private bool _activated;
         private int _stockCount;
 
@@ -17,11 +16,6 @@ namespace CQRS.Simple.Aggregates
         public InventoryItemAggregate(Guid id, string name)
         {
             RaiseEvent(new ItemCreatedEvent(id, name));
-        }
-
-        public override Guid Id
-        {
-            get { return _id; }
         }
 
         public void ChangeName(string newName)

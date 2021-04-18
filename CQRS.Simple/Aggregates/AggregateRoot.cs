@@ -7,10 +7,13 @@ namespace CQRS.Simple.Aggregates
 {
     public abstract class AggregateRoot
     {
+        protected Guid _id;
         private readonly List<Event> _changes = new List<Event>();
 
-        public abstract Guid Id { get; }
-        public int Version { get; internal set; }
+        public Guid Id
+        {
+            get { return _id; }
+        }
 
         public IEnumerable<Event> GetUncommittedChanges()
         {
