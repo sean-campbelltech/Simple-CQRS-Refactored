@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using CQRS.Simple.Aggregates;
 using CQRS.Simple.Repositories;
 
@@ -13,17 +14,23 @@ namespace CQRS.Simple.Handlers
             _eventStore = eventStore;
         }
 
-        public void Save(AggregateRoot aggregate, int expectedVersion)
+        public void Save(AggregateRoot aggregate)
         {
-            _eventStore.SaveEvents(aggregate.Id, aggregate.GetUncommittedChanges(), expectedVersion);
+            _eventStore.SaveEvents(aggregate.Id, aggregate.GetUncommittedChanges(), aggregate.Version);
             aggregate.MarkChangesAsCommitted();
         }
 
-        public T GetById(Guid id)
+        public T GetById(Guid aggregateId)
         {
             var aggregate = new T();
-            var events = _eventStore.GetEvents(id);
+            var events = _eventStore.GetEvents(aggregateId);
             aggregate.ReplayEvents(events);
+
+            if (aggregate != null)
+            {
+                var latestVersion = events?.Select(x => x.Version)?.Max() ?? -1;
+                aggregate.Version = latestVersion;
+            }
 
             return aggregate;
         }

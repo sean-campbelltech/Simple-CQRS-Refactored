@@ -6,13 +6,11 @@ namespace CQRS.Simple.Commands
     {
         public readonly Guid InventoryItemId;
         public readonly string NewName;
-        public readonly int OriginalVersion;
 
-        public RenameItemCommand(Guid inventoryItemId, string newName, int originalVersion)
+        public RenameItemCommand(Guid inventoryItemId, string newName)
         {
             InventoryItemId = inventoryItemId;
             NewName = newName;
-            OriginalVersion = originalVersion;
         }
     }
 }

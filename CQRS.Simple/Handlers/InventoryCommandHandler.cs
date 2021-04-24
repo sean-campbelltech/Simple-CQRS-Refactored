@@ -17,7 +17,7 @@ namespace CQRS.Simple.Handlers
         {
             var aggregate = new InventoryItemAggregate(command.InventoryItemId, command.Name);
 
-            _eventSourcingHandler.Save(aggregate, -1);
+            _eventSourcingHandler.Save(aggregate);
         }
 
         public void Handle(DeactivateItemCommand command)
@@ -25,7 +25,7 @@ namespace CQRS.Simple.Handlers
             var aggregate = _eventSourcingHandler.GetById(command.InventoryItemId);
             aggregate.Deactivate();
 
-            _eventSourcingHandler.Save(aggregate, command.OriginalVersion);
+            _eventSourcingHandler.Save(aggregate);
         }
 
         public void Handle(RemoveItemsCommand command)
@@ -33,7 +33,7 @@ namespace CQRS.Simple.Handlers
             var aggregate = _eventSourcingHandler.GetById(command.InventoryItemId);
             aggregate.Remove(command.Count);
 
-            _eventSourcingHandler.Save(aggregate, command.OriginalVersion);
+            _eventSourcingHandler.Save(aggregate);
         }
 
         public void Handle(CheckInItemsCommand command)
@@ -41,7 +41,7 @@ namespace CQRS.Simple.Handlers
             var aggregate = _eventSourcingHandler.GetById(command.InventoryItemId);
             aggregate.CheckIn(command.Count);
 
-            _eventSourcingHandler.Save(aggregate, command.OriginalVersion);
+            _eventSourcingHandler.Save(aggregate);
         }
 
         public void Handle(RenameItemCommand command)
@@ -49,7 +49,7 @@ namespace CQRS.Simple.Handlers
             var aggregate = _eventSourcingHandler.GetById(command.InventoryItemId);
             aggregate.ChangeName(command.NewName);
 
-            _eventSourcingHandler.Save(aggregate, command.OriginalVersion);
+            _eventSourcingHandler.Save(aggregate);
         }
     }
 }

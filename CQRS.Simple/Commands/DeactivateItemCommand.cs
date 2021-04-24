@@ -5,12 +5,10 @@ namespace CQRS.Simple.Commands
     public class DeactivateItemCommand : Command
     {
         public readonly Guid InventoryItemId;
-        public readonly int OriginalVersion;
 
-        public DeactivateItemCommand(Guid inventoryItemId, int originalVersion)
+        public DeactivateItemCommand(Guid inventoryItemId)
         {
             InventoryItemId = inventoryItemId;
-            OriginalVersion = originalVersion;
         }
     }
 

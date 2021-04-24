@@ -6,7 +6,7 @@ namespace CQRS.Simple.Events
     {
         public readonly Guid Id;
         public readonly string Name;
-        public ItemCreatedEvent(Guid id, string name)
+        public ItemCreatedEvent(Guid id, string name, int version) : base(version)
         {
             Id = id;
             Name = name;

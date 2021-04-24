@@ -5,7 +5,7 @@ namespace CQRS.Simple.Handlers
 {
     public interface IEventSourcingHandler<T> where T : AggregateRoot, new()
     {
-        void Save(AggregateRoot aggregate, int expectedVersion);
-        T GetById(Guid id);
+        void Save(AggregateRoot aggregate);
+        T GetById(Guid aggregateId);
     }
 }

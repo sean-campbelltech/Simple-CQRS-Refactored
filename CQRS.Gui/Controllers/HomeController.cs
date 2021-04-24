@@ -57,7 +57,7 @@ namespace CQRS.Gui.Controllers
         [HttpPost]
         public ActionResult ChangeName(Guid id, string name, int version)
         {
-            var command = new RenameItemCommand(id, name, version);
+            var command = new RenameItemCommand(id, name);
             _commandDispatcher.Send(command);
 
             return RedirectToAction("Index");
@@ -72,7 +72,7 @@ namespace CQRS.Gui.Controllers
         [HttpPost]
         public ActionResult Deactivate(Guid id, int version)
         {
-            _commandDispatcher.Send(new DeactivateItemCommand(id, version));
+            _commandDispatcher.Send(new DeactivateItemCommand(id));
             return RedirectToAction("Index");
         }
 
@@ -85,7 +85,7 @@ namespace CQRS.Gui.Controllers
         [HttpPost]
         public ActionResult CheckIn(Guid id, int number, int version)
         {
-            _commandDispatcher.Send(new CheckInItemsCommand(id, number, version));
+            _commandDispatcher.Send(new CheckInItemsCommand(id, number));
             return RedirectToAction("Index");
         }
 
@@ -98,7 +98,7 @@ namespace CQRS.Gui.Controllers
         [HttpPost]
         public ActionResult Remove(Guid id, int number, int version)
         {
-            _commandDispatcher.Send(new RemoveItemsCommand(id, number, version));
+            _commandDispatcher.Send(new RemoveItemsCommand(id, number));
             return RedirectToAction("Index");
         }
 

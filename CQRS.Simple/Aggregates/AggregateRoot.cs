@@ -15,6 +15,8 @@ namespace CQRS.Simple.Aggregates
             get { return _id; }
         }
 
+        public int Version { get; set; } = -1;
+
         public IEnumerable<Event> GetUncommittedChanges()
         {
             return _changes;

@@ -6,13 +6,11 @@ namespace CQRS.Simple.Commands
     {
         public Guid InventoryItemId;
         public readonly int Count;
-        public readonly int OriginalVersion;
 
-        public CheckInItemsCommand(Guid inventoryItemId, int count, int originalVersion)
+        public CheckInItemsCommand(Guid inventoryItemId, int count)
         {
             InventoryItemId = inventoryItemId;
             Count = count;
-            OriginalVersion = originalVersion;
         }
     }
 }

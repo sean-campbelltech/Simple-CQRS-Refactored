@@ -15,7 +15,7 @@ namespace CQRS.Simple.Aggregates
 
         public InventoryItemAggregate(Guid id, string name)
         {
-            RaiseEvent(new ItemCreatedEvent(id, name));
+            RaiseEvent(new ItemCreatedEvent(id, name, -1));
         }
 
         public void ChangeName(string newName)
@@ -49,25 +49,26 @@ namespace CQRS.Simple.Aggregates
             RaiseEvent(new ItemDeactivatedEvent(_id));
         }
 
-        private void Apply(ItemCreatedEvent e)
+        private void Apply(ItemCreatedEvent @event)
         {
-            _id = e.Id;
+            _id = @event.Id;
             _activated = true;
         }
 
-        private void Apply(ItemDeactivatedEvent e)
+
+        private void Apply(ItemDeactivatedEvent @event)
         {
             _activated = false;
         }
 
-        private void Apply(ItemsCheckedInEvent e)
+        private void Apply(ItemsCheckedInEvent @event)
         {
-            _stockCount += e.Count;
+            _stockCount += @event.Count;
         }
 
-        private void Apply(ItemsRemovedEvent e)
+        private void Apply(ItemsRemovedEvent @event)
         {
-            _stockCount -= e.Count;
+            _stockCount -= @event.Count;
         }
     }
 }
